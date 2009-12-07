@@ -1,5 +1,6 @@
 require File.dirname(__FILE__) + '/culerity/remote_object_proxy'
 require File.dirname(__FILE__) + '/culerity/remote_browser_proxy'
+require File.dirname(__FILE__) + '/culerity/jruby_runner'
 
 Symbol.class_eval do
   def to_proc
