@@ -22,10 +22,12 @@ end
 
 desc "Run all unit specs"
 task :spec do
-  jruby_complete = "#{File.dirname(__FILE__)}/vendor/jruby/jruby-complete-1.4.0.jar"
-  celerity = "#{File.dirname(__FILE__)}/vendor/gems/celerity-0.7.6/lib"
-  jruby = "java -Xmx500m -Xss1024k -jar #{jruby_complete} -I#{celerity}"
-  exec "#{jruby} -S spec #{FileList['spec/*_spec.rb']}"
+  # Is it a little crazy to need the JRubyRunner in order to run its own
+  # tests? (and others) Maybe. I don't care. It's better than nothing. In
+  # the end, it will still blow up if it doesn't work.
+  require "#{File.dirname(__FILE__)}/lib/culerity/jruby_runner"
+  puts Culerity::JRubyRunner.run "-S spec #{FileList['spec/*_spec.rb']}"
+  exit $?.exitstatus if $?.exitstatus != 0
 end
 
 desc "Run all features"
