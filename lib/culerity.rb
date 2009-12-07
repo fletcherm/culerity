@@ -21,7 +21,8 @@ module Culerity
   end
 
   def self.run_server
-    IO.popen("jruby #{__FILE__}", 'r+').extend(ServerCommands)
+    jruby = "java -Xmx500m -Xss1024k -jar #{File.dirname(__FILE__)}/../vendor/jruby-complete-1.4.0.jar"
+    IO.popen("#{jruby} #{__FILE__}", 'r+').extend(ServerCommands)
   end
   
   def self.run_rails(options = {})

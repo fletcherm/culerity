@@ -21,8 +21,11 @@ rescue LoadError
 end
 
 desc "Run all unit specs"
-Spec::Rake::SpecTask.new(:spec) do |t|
-  t.spec_files = FileList['spec/*_spec.rb']
+task :spec do
+  jruby_complete = "#{File.dirname(__FILE__)}/vendor/jruby/jruby-complete-1.4.0.jar"
+  celerity = "#{File.dirname(__FILE__)}/vendor/gems/celerity-0.7.6/lib"
+  jruby = "java -Xmx500m -Xss1024k -jar #{jruby_complete} -I#{celerity}"
+  exec "#{jruby} -S spec #{FileList['spec/*_spec.rb']}"
 end
 
 desc "Run all features"
