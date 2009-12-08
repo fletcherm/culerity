@@ -7,12 +7,12 @@ begin
   require 'rubygems' unless ENV['NO_RUBYGEMS']
   require 'jeweler'
   Jeweler::Tasks.new do |s|
-    s.name = "culerity"
-    s.summary = %Q{Culerity integrates Cucumber and Celerity in order to test your application's full stack.}
-    s.email = "alex@upstream-berlin.com"
-    s.homepage = "http://github.com/langalex/culerity"
+    s.name = "fletcherm-culerity"
+    s.summary = %Q{Culerity integrates Cucumber and Celerity in order to test your application's full stack. NOTE: This version of Culerity embeds JRuby 1.4.0}
+    s.email = "fletcher@atomicobject.com"
+    s.homepage = "http://github.com/fletcherm/culerity"
     s.description = "Culerity integrates Cucumber and Celerity in order to test your application's full stack."
-    s.authors = ["Alexander Lang"]
+    s.authors = ["Alexander Lang", "Matt Fletcher"]
     s.add_dependency 'cucumber' 
     s.add_dependency 'rspec' 
   end

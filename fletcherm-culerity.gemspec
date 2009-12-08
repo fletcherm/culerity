@@ -4,14 +4,14 @@
 # -*- encoding: utf-8 -*-
 
 Gem::Specification.new do |s|
-  s.name = %q{culerity}
+  s.name = %q{fletcherm-culerity}
   s.version = "0.2.5"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
-  s.authors = ["Alexander Lang"]
+  s.authors = ["Alexander Lang", "Matt Fletcher"]
   s.date = %q{2009-12-08}
   s.description = %q{Culerity integrates Cucumber and Celerity in order to test your application's full stack.}
-  s.email = %q{alex@upstream-berlin.com}
+  s.email = %q{fletcher@atomicobject.com}
   s.extra_rdoc_files = [
     "README.md"
   ]
@@ -132,11 +132,11 @@ Gem::Specification.new do |s|
      "vendor/gems/celerity-0.7.6/tasks/yard.rake",
      "vendor/jruby/jruby-complete-1.4.0.jar"
   ]
-  s.homepage = %q{http://github.com/langalex/culerity}
+  s.homepage = %q{http://github.com/fletcherm/culerity}
   s.rdoc_options = ["--charset=UTF-8"]
   s.require_paths = ["lib"]
   s.rubygems_version = %q{1.3.5}
-  s.summary = %q{Culerity integrates Cucumber and Celerity in order to test your application's full stack.}
+  s.summary = %q{Culerity integrates Cucumber and Celerity in order to test your application's full stack. NOTE: This version of Culerity embeds JRuby 1.4.0}
   s.test_files = [
     "spec/celerity_server_spec.rb",
      "spec/culerity_spec.rb",
