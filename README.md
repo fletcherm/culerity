@@ -1,3 +1,7 @@
+## WHAT THIS FORK DOES
+
+Culerity normally assumes you have JRuby installed somewhere on your system and in your environment. This fork embeds JRuby 1.4.0 (in the form of the jruby complete jar) within Culerity itself. This way, JRuby does not need to be installed system-wide.
+
 ## Introduction
 
 Culerity integrates Cucumber and Celerity in order to test your application's full stack.
@@ -11,19 +15,7 @@ Culerity lets you:
 
 The following guide is written for a Rails application (tested with 2.3.5) but Culerity should work with any other Web Framework that is supported by Cucumber.
 
-First download JRuby and unpack it to some location, for example $HOME/jruby. Make sure that the jruby executable is in your path. You can do this by either setting your PATH accordingly...
-
-    export PATH=$HOME/jruby/bin:$PATH
- 
-... or by creating a symlink from your bin directory:
-
-    ln -s $HOME/jruby/bin/jruby /usr/bin/jruby
-
-You will need the celerity gem installed into JRuby:
-
-    jruby -S gem install celerity
-
-Now install the Culerity gem:
+Install the Culerity gem:
 
     gem install culerity --source http://gemcutter.org
  
@@ -54,10 +46,6 @@ NOTE: The default port for this server is 3001. You can change this in features/
 While Celerity is based on Java and requires JRuby to run, with Culerity you can still run your tests in your own Ruby Environment. When you run your features a separate JRuby process for Celerity is spawned and all Celerity Commands are redirected to this other process.
 
 ## Troubleshooting
-
-I get a broken pipe error:
-
-* make sure JRuby is installed and in your path: running _jruby -v_ should not produce an error
 
 I get _Connection Refused_ errors
 
