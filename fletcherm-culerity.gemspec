@@ -5,11 +5,11 @@
 
 Gem::Specification.new do |s|
   s.name = %q{fletcherm-culerity}
-  s.version = "0.2.5"
+  s.version = "0.2.6"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Alexander Lang", "Matt Fletcher"]
-  s.date = %q{2009-12-08}
+  s.date = %q{2009-12-16}
   s.description = %q{Culerity integrates Cucumber and Celerity in order to test your application's full stack.}
   s.email = %q{fletcher@atomicobject.com}
   s.extra_rdoc_files = [
@@ -22,7 +22,6 @@ Gem::Specification.new do |s|
      "README.md",
      "Rakefile",
      "VERSION.yml",
-     "culerity.gemspec",
      "features/fixtures/jquery",
      "features/fixtures/sample_feature",
      "features/installing_culerity.feature",
@@ -34,6 +33,7 @@ Gem::Specification.new do |s|
      "features/support/common.rb",
      "features/support/env.rb",
      "features/support/matchers.rb",
+     "fletcherm-culerity.gemspec",
      "init.rb",
      "lib/culerity.rb",
      "lib/culerity/celerity_server.rb",
@@ -151,8 +151,8 @@ Gem::Specification.new do |s|
     s.specification_version = 3
 
     if Gem::Version.new(Gem::RubyGemsVersion) >= Gem::Version.new('1.2.0') then
-      s.add_runtime_dependency(%q<cucumber>, [">= 0"])
-      s.add_runtime_dependency(%q<rspec>, [">= 0"])
+      s.add_development_dependency(%q<cucumber>, [">= 0"])
+      s.add_development_dependency(%q<rspec>, [">= 0"])
     else
       s.add_dependency(%q<cucumber>, [">= 0"])
       s.add_dependency(%q<rspec>, [">= 0"])
