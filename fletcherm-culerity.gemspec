@@ -9,7 +9,7 @@ Gem::Specification.new do |s|
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Alexander Lang", "Matt Fletcher"]
-  s.date = %q{2009-12-16}
+  s.date = %q{2009-12-26}
   s.description = %q{Culerity integrates Cucumber and Celerity in order to test your application's full stack.}
   s.email = %q{fletcher@atomicobject.com}
   s.extra_rdoc_files = [
