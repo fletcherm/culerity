@@ -1,3 +1,9 @@
+## 0.2.8
+
+* removed separate development and continuous integration environments and replaced them with a single one (thilo)
+* more webrat like step definitions (lupine)
+* improve on stability issues (mattmatt)
+
 ## 0.2.7
 
 * fixed RemoteBrowser#confirm called celerity remove_listener with invalid arguments
