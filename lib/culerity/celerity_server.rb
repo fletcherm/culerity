@@ -13,6 +13,7 @@ module Culerity
         call, block = eval _in.gets.to_s.strip
         return if call == "_exit_"
         next(close_browsers) if call == "_close_browsers_"
+        next(clear_proxies) if call == "_clear_proxies_"
         unless call.nil?
           begin
             result = target(call.first).send call[1], *call[2..-1], &block
@@ -41,7 +42,7 @@ module Culerity
     def close_browsers
       @browsers.each { |browser| browser.close }
       @browsers = []
-      @proxies = {}
+      clear_proxies
     end
 
     def browser(number)
@@ -70,6 +71,10 @@ module Culerity
         @proxies[result.object_id] = result
         "Culerity::RemoteObjectProxy.new(#{result.object_id}, @io)"
       end
+    end
+
+    def clear_proxies
+      @proxies = {}
     end
   end
 end
