@@ -2,11 +2,11 @@ require File.dirname(__FILE__) + '/spec_helper'
 
 describe Culerity::JRubyRunner do
   before do
-    @original_rubyopts = ENV["RUBYOPTS"]
+    @original_rubyopt = ENV["RUBYOPT"]
   end
 
   after do
-    ENV["RUBYOPTS"] = @original_rubyopts
+    ENV["RUBYOPT"] = @original_rubyopt
   end
 
   it "has the command for running jruby within jruby-complete" do
@@ -19,7 +19,7 @@ describe Culerity::JRubyRunner do
   end
 
   it "ignores RUBYOPTS when running the JRuby process" do
-    ENV["RUBYOPTS"] = "some optz"
-    Culerity::JRubyRunner.run(%+-e 'puts ENV["RUBYOPTS"]'+).chomp.should == ""
+    ENV["RUBYOPT"] = "-I../.."
+    Culerity::JRubyRunner.run(%+-e 'puts ENV["RUBYOPT"]'+).chomp.should == ""
   end
 end
