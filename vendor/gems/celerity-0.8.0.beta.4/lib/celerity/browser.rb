@@ -34,7 +34,7 @@ module Celerity
     #
     # @option opts :browser [:internet_explorer, :firefox, :firefox3] (:firefox3) Set the BrowserVersion used by HtmlUnit. Defaults to Firefox 3.
     # @option opts :charset [String] ("UTF-8") Specify the charset that webclient will use for requests.
-    # @option opts :css [Boolean] (false) Enable CSS.  Disabled by default.
+    # @option opts :css [Boolean] (true) Enable/disable CSS.  Enabled by default.
     # @option opts :ignore_pattern [Regexp] See Browser#ignore_pattern=
     # @option opts :javascript_enabled [Boolean] (true)  Enable/disable JavaScript evaluation. Enabled by default.
     # @option opts :javascript_exceptions [Boolean] (false) Raise exceptions on script errors. Disabled by default.
@@ -67,14 +67,14 @@ module Celerity
 
       @render_type   = opts.delete(:render)    || :html
       @charset       = opts.delete(:charset)   || "UTF-8"
-      self.log_level = opts.delete(:log_level) || :off
-
       @page           = nil
       @error_checkers = []
       @browser        = self # for Container#browser
 
       setup_webclient opts
       setup_viewer opts.delete(:viewer)
+
+      self.log_level = opts.delete(:log_level) || :off
 
       raise ArgumentError, "unknown option #{opts.inspect}" unless opts.empty?
     end
@@ -159,7 +159,9 @@ module Celerity
     #
 
     def html
-      @page ? @page.getWebResponse.getContentAsString(@charset) : ''
+      return '' unless @page
+
+      @page.getWebResponse.getContentAsString(@charset)
     end
 
     #
@@ -179,16 +181,13 @@ module Celerity
     def text
       return '' unless @page
 
-      if @page.respond_to?("getContent")
-        string = @page.getContent.strip
-      elsif doc = @page.documentElement
-        string = doc.asText.strip
+      if @page.respond_to?(:getContent)
+        @page.getContent.strip
+      elsif @page.respond_to?(:getDocumentElement) && doc = @page.getDocumentElement
+        doc.asText.strip
       else
-        string = ''
+        ''
       end
-
-      # Celerity::Util.normalize_text(string)
-      string
     end
 
     #
@@ -713,6 +712,14 @@ module Celerity
     end
 
     #
+    # Open the JavaScript debugger GUI
+    #
+
+    def visual_debugger
+      HtmlUnit::Util::WebClientUtils.attachVisualDebugger @webclient
+    end
+
+    #
     # Sets the current page object for the browser
     #
     # @param [HtmlUnit::HtmlPage] value The page to set.
@@ -830,7 +837,7 @@ module Celerity
 
       self.javascript_exceptions  = false unless opts.delete(:javascript_exceptions)
       self.status_code_exceptions = false unless opts.delete(:status_code_exceptions)
-      self.css                    = false unless opts.delete(:css)
+      self.css                    = opts.delete(:css) if opts[:css]
       self.javascript_enabled     = opts.delete(:javascript_enabled) != false
       self.secure_ssl             = opts.delete(:secure_ssl) != false
       self.ignore_pattern         = opts.delete(:ignore_pattern) if opts[:ignore_pattern]
