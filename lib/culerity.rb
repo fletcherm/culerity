@@ -19,14 +19,34 @@ module Culerity
     def close_browsers
       self.puts '["_close_browsers_"]'
     end
-
+    
     def clear_proxies
-      self.puts '["_clear_proxies_"]'
+      self.puts '["_clear_proxies_"]'      
     end
   end
-
+  
+  def self.culerity_root
+    File.expand_path('../../', __FILE__)
+  end
+  
+  def self.celerity_invocation
+    %{#{culerity_root}/lib/start_celerity.rb}
+  end
+  
+  def self.jruby_invocation
+    @jruby_invocation ||= (ENV["JRUBY_INVOCATION"] || "jruby")
+  end
+  
+  def self.jruby_invocation=(invocation)
+    @jruby_invocation = invocation
+  end
+  
   def self.run_server
+<<<<<<< HEAD
     IO.popen("#{Culerity::JRubyRunner.cmd} #{__FILE__}", 'r+').extend(ServerCommands)
+=======
+    IO.popen(%{#{jruby_invocation} "#{celerity_invocation}"}, 'r+').extend(ServerCommands)
+>>>>>>> langalex
   end
   
   def self.run_rails(options = {})
@@ -47,9 +67,3 @@ module Culerity
     end
   end
 end
-
-if __FILE__ == $0
-  require File.dirname(__FILE__) + '/culerity/celerity_server'
-  Culerity::CelerityServer.new STDIN, STDOUT
-end
-

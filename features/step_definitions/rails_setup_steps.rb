@@ -16,12 +16,21 @@ Given /^culerity is installed as a plugin$/ do
   `cp -rf #{File.dirname(__FILE__) + "/../../lib"} #{File.join(@active_project_folder, plugin_folder)}`
   `cp -rf #{File.dirname(__FILE__) + "/../../rails"} #{File.join(@active_project_folder, plugin_folder)}`
   `cp -rf #{File.dirname(__FILE__) + "/../../init.rb"} #{File.join(@active_project_folder, plugin_folder)}`
+  `cp -rf #{File.dirname(__FILE__) + "/../../bin"} #{File.join(@active_project_folder, plugin_folder)}`
 end
 
 When /^I add a feature file to test Rails index.html default file$/ do
   sample_feature = File.expand_path(File.dirname(__FILE__) + "/../fixtures/sample_feature")
   in_project_folder do
     `cp -rf #{sample_feature} features/sample.feature`
+  end
+end
+
+When /^(?:I )?add an rvm_verbose_flag=0-wielding \.rvmrc to the home folder$/ do
+  in_home_folder do
+    File.open('.rvmrc', 'w+') do |f|
+      f.puts "rvm_verbose_flag=0"
+    end
   end
 end
 

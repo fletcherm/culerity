@@ -5,14 +5,16 @@ Feature: Running cucumber without explicitly running external services
 
   Background:
     Given a Rails app
-      And I run executable "script/generate" with arguments "cucumber"
-      And I delete file "features/step_definitions/webrat_steps.rb"
+      And I run executable "script/generate" with arguments "cucumber --rspec --webrat"
+      And I delete file "features/step_definitions/web_steps.rb"
       And I delete file "features/support/env.rb"
       And culerity is installed as a plugin
       And I invoke task "rake db:migrate"
     When I run executable "script/generate" with arguments "culerity"
       And I setup load path to local code
       And I setup the culerity javascript helpers
+      And I add the JRUBY_INVOCATION check to "features/support/env.rb"
+      And I add an rvm_verbose_flag=0-wielding .rvmrc to the home folder  
   
   Scenario: Successfully run scenarios without requiring celerity or rails processes running
     When I add a feature file to test Rails index.html default file

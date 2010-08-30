@@ -1,21 +1,28 @@
 require 'culerity'
 
 Before do
-  $rails_server ||= Culerity::run_rails(:environment => 'culerity', :port => 3001)
+  $rails_server_pid ||= Culerity::run_rails(:environment => 'culerity', :port => 3001)
   $server ||= Culerity::run_server
-  $browser = Culerity::RemoteBrowserProxy.new $server, {:browser => :firefox3,
-    :javascript_exceptions => true,
-    :resynchronize => true,
-    :status_code_exceptions => true
-  }
-  $browser.log_level = :warning
+  unless $browser
+    $browser = Culerity::RemoteBrowserProxy.new $server, {:browser => :firefox3,
+      :javascript_exceptions => true,
+      :resynchronize => true,
+      :status_code_exceptions => true
+    }
+    $browser.log_level = :warning
+  end
   @host = 'http://localhost:3001'
+end
+
+After do
+  $server.clear_proxies
+  $browser.clear_cookies
 end
 
 at_exit do
   $browser.exit if $browser
   $server.close if $server
-  Process.kill(6, $rails_server.pid.to_i) if $rails_server
+  Process.kill(6, $rails_server_pid) if $rails_server_pid
 end
 
 Given /^(?:|I )am on (.+)$/ do |page_name|
@@ -139,14 +146,11 @@ Then /^the "([^\"]*)" checkbox should not be checked$/ do |label|
 end
 
 Then /I should see "([^\"]*)"/ do |text|
-  # if we simply check for the browser.html content we don't find content that has been added dynamically, e.g. after an ajax call
-  div = $browser.div(:text, /#{Regexp::escape(text)}/)
-  div.should be_exist
+  $browser.text.include?(text).should be_true
 end
 
 Then /I should not see "([^\"]*)"/ do |text|
-  div = $browser.div(:text, /#{Regexp::escape(text)}/)
-  div.should_not be_exist
+  $browser.text.include?(text).should_not be_true
 end
 
 def find_by_label_or_id(element, attribute)
