@@ -5,13 +5,15 @@
 
 Gem::Specification.new do |s|
   s.name = %q{fletcherm-culerity}
-  s.version = "0.2.9"
+  s.version = "0.2.12"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Alexander Lang", "Matt Fletcher"]
-  s.date = %q{2010-08-03}
+  s.date = %q{2010-08-30}
+  s.default_executable = %q{run_celerity_server.rb}
   s.description = %q{Culerity integrates Cucumber and Celerity in order to test your application's full stack.}
   s.email = %q{fletcher@atomicobject.com}
+  s.executables = ["run_celerity_server.rb"]
   s.extra_rdoc_files = [
     "README.md"
   ]
@@ -22,6 +24,7 @@ Gem::Specification.new do |s|
      "README.md",
      "Rakefile",
      "VERSION.yml",
+     "bin/run_celerity_server.rb",
      "features/fixtures/jquery",
      "features/fixtures/sample_feature",
      "features/installing_culerity.feature",
@@ -41,6 +44,7 @@ Gem::Specification.new do |s|
      "lib/culerity/persistent_delivery.rb",
      "lib/culerity/remote_browser_proxy.rb",
      "lib/culerity/remote_object_proxy.rb",
+     "lib/start_celerity.rb",
      "lib/tasks/rspec.rake",
      "rails/init.rb",
      "rails_generators/culerity/culerity_generator.rb",
