@@ -42,11 +42,7 @@ module Culerity
   end
   
   def self.run_server
-<<<<<<< HEAD
     IO.popen("#{Culerity::JRubyRunner.cmd} #{__FILE__}", 'r+').extend(ServerCommands)
-=======
-    IO.popen(%{#{jruby_invocation} "#{celerity_invocation}"}, 'r+').extend(ServerCommands)
->>>>>>> langalex
   end
   
   def self.run_rails(options = {})

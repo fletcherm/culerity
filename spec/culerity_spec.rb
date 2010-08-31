@@ -74,6 +74,8 @@ describe Culerity do
       Culerity.celerity_invocation.should == "/path/to/culerity/lib/start_celerity.rb"
     end
     
+    # Not relevant in this fork of Culerity, since JRuby is embedded and invoked via the JRubyRunner
+=begin
     describe "invoking JRuby" do
       it "knows how to invoke it" do
         Culerity.jruby_invocation.should == 'jruby'
@@ -108,5 +110,6 @@ describe Culerity do
       Culerity.jruby_invocation = "rvm jruby@culerity ruby"
       Culerity.run_server
     end
+=end
   end
 end
