@@ -42,7 +42,7 @@ module Culerity
   end
   
   def self.run_server
-    IO.popen("#{Culerity::JRubyRunner.cmd} #{__FILE__}", 'r+').extend(ServerCommands)
+    IO.popen("#{Culerity::JRubyRunner.cmd} #{celerity_invocation}", 'r+').extend(ServerCommands)
   end
   
   def self.run_rails(options = {})
