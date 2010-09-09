@@ -3,7 +3,7 @@ require File.expand_path(File.dirname(__FILE__) + '/spec_helper')
 describe Culerity do
   describe 'run_rails' do
     def stub_rails_root!
-      unless defined?(::Rails)
+      unless defined?(Rails)
         Kernel.const_set "Rails", stub()
       end
       Rails.stub!(:root).and_return(Dir.pwd)
