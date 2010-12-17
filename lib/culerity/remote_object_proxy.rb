@@ -20,7 +20,11 @@ module Culerity
     def id
       send_remote(:id)
     end
-
+    
+    def inspect
+      send_remote(:inspect)
+    end
+    
     def method_missing(name, *args, &block)
       send_remote(name, *args, &block)
     end
@@ -51,7 +55,11 @@ module Culerity
       if res.first == :return
         res[1]
       elsif res.first == :exception
-        raise CulerityException.new("#{res[1]}: #{res[2]}", res[3])
+        begin
+          raise "local trace"
+        rescue => ex
+          raise CulerityException.new("#{res[1]}: #{res[2]}", res[3] + ex.backtrace)
+        end
       end
     end
 

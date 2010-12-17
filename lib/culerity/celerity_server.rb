@@ -20,7 +20,7 @@ module Culerity
             result = target(call.first).send call[1], *call[2..-1], &block
             _out << "[:return, #{proxify result}]\n"
           rescue => e
-            _out << "[:exception, \"#{e.class.name}\", #{e.message.inspect}, #{e.backtrace.inspect}]\n"
+            _out << "[:exception, \"#{e.class.name}\", #{e.message.inspect}, #{prepend_js_stack_trace(e).inspect}]\n"
           end
         end
 
@@ -78,8 +78,17 @@ module Culerity
       end
     end
 
-    def clear_proxies
-      @proxies = {}
+    def prepend_js_stack_trace(exception)
+      def extract_js_strack_trace(e)
+        if e.respond_to?(:getScriptStackTrace)
+          e.getScriptStackTrace
+        elsif e.respond_to?(:cause) && e.cause
+          extract_js_strack_trace e.cause
+        else
+          ""
+        end
+      end
+      extract_js_strack_trace(exception).split("\n") + exception.backtrace
     end
   end
 end

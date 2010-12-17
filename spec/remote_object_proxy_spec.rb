@@ -41,6 +41,13 @@ describe Culerity::RemoteObjectProxy do
     proxy = Culerity::RemoteObjectProxy.new 345, io
     proxy.goto '/homepage'
   end
+
+  it "should send inspect as a serialized method call to the output" do
+    io = stub 'io', :gets => '[:return, "inspect output"]'
+    io.should_receive(:<<).with(%Q{[[345, "inspect"]]\n})
+    proxy = Culerity::RemoteObjectProxy.new 345, io
+    proxy.inspect.should == "inspect output"
+  end
   
   it "should send the serialized method call with a proc argument to the output" do
     io = stub 'io', :gets => "[:return]"
@@ -57,7 +64,7 @@ describe Culerity::RemoteObjectProxy do
     
     proxy.send_remote(:method) { "lambda { true }" }
   end
-  
+    
   it "should return the deserialized return value" do
     io = stub 'io', :gets => "[:return, :okay]\n", :<< => nil
     proxy = Culerity::RemoteObjectProxy.new 345, io
@@ -70,6 +77,20 @@ describe Culerity::RemoteObjectProxy do
     lambda {
       proxy.goto '/home'
     }.should raise_error(Culerity::CulerityException)
+  end
+  
+  it "should include the full 'local' back trace in addition to the 'remote' backtrace" do
+    io = stub 'io', :gets => %Q{[:exception, "RuntimeError", "test exception", ["Remote", "Backtrace"]]}, :<< => nil
+    proxy = Culerity::RemoteObjectProxy.new 345, io
+    begin
+      proxy.goto '/home'
+    rescue => ex
+      puts ex.backtrace
+      ex.backtrace[0].should == "Remote"
+      ex.backtrace[1].should == "Backtrace"
+      ex.backtrace.detect {|line| line =~ /lib\/culerity\/remote_object_proxy\.rb/}.should_not be_nil
+      ex.backtrace.detect {|line| line =~ /spec\/remote_object_proxy_spec\.rb/}.should_not be_nil
+    end
   end
   
   it "should send exit" do
