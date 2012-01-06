@@ -92,7 +92,7 @@ describe Culerity::RemoteObjectProxy do
     begin
       proxy.goto '/home'
     rescue => ex
-      puts ex.backtrace
+      # puts ex.backtrace
       ex.backtrace[0].should == "Remote"
       ex.backtrace[1].should == "Backtrace"
       ex.backtrace.detect {|line| line =~ /lib\/culerity\/remote_object_proxy\.rb/}.should_not be_nil

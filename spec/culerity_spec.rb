@@ -97,7 +97,7 @@ describe Culerity do
     it "shells out and sparks up jruby with the correct invocation" do
       Culerity.stub!(:celerity_invocation).and_return('/path/to/start_celerity.rb')
       
-      IO.should_receive(:popen).with('jruby "/path/to/start_celerity.rb"', 'r+')
+      IO.should_receive(:popen).with('RUBYOPT="" jruby "/path/to/start_celerity.rb"', 'r+')
       
       Culerity.run_server
     end
@@ -105,7 +105,7 @@ describe Culerity do
     it "allows a more complex situation, e.g. using RVM + named gemset" do
       Culerity.stub!(:celerity_invocation).and_return('/path/to/start_celerity.rb')
       
-      IO.should_receive(:popen).with('rvm jruby@culerity ruby "/path/to/start_celerity.rb"', 'r+')
+      IO.should_receive(:popen).with('RUBYOPT="" rvm jruby@culerity ruby "/path/to/start_celerity.rb"', 'r+')
       
       Culerity.jruby_invocation = "rvm jruby@culerity ruby"
       Culerity.run_server
